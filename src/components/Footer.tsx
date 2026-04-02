@@ -1,4 +1,5 @@
 import logoImg from "figma:asset/eb512c399380dc0d7f2c91ba581d523880a08201.png";
+import { Instagram, Facebook, Youtube, Linkedin } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -22,6 +23,44 @@ export function Footer({ onNavigate }: FooterProps) {
               Complete service ecosystem. Local-first execution.
               Community-first values.
             </p>
+            <div className="flex gap-4 mt-6">
+              <a
+                href="https://www.instagram.com/visvasa_home_/?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.facebook.com/Visvasaheritage/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.youtube.com/@visvasahomes"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/110911374/admin/dashboard/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+            </div>
           </div>
 
           <div>

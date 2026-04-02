@@ -1,4 +1,4 @@
-import { Menu, X, Phone, Mail, ChevronDown, Home, Building2, Store, Factory, HeartPulse, GraduationCap, UtensilsCrossed, Building, Sparkles, Scissors, Droplets, Zap, Refrigerator, PaintBucket, Heart, Baby, Sofa, PartyPopper, HardHat } from "lucide-react";
+import { Menu, X, Phone, Mail, ChevronDown, Home, Building2, Store, Factory, HeartPulse, GraduationCap, UtensilsCrossed, Building, Sparkles, Scissors, Droplets, Zap, Refrigerator, PaintBucket, Heart, Baby, Sofa, PartyPopper, HardHat, Wrench, Hammer, Wind, Drill, Trees, Frame, BrickWall } from "lucide-react";
 import { useState } from "react";
 import { LocationSelector } from "./LocationSelector";
 import logoImg from "figma:asset/eb512c399380dc0d7f2c91ba581d523880a08201.png";
@@ -37,18 +37,39 @@ export function Header({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
-  const serviceOptions = [
-    { name: "Home Cleaning & Sanitation", icon: Sparkles, onClick: onBookService },
-    { name: "Beauty & Grooming Services", icon: Scissors, onClick: onBookService },
-    { name: "Plumbing & Water Solutions", icon: Droplets, onClick: onBookService },
-    { name: "Electrical & Wiring Services", icon: Zap, onClick: onBookService },
-    { name: "Appliance Repair & AC Services", icon: Refrigerator, onClick: onBookService },
-    { name: "Home Improvement & Pest Control", icon: PaintBucket, onClick: onBookService },
-    { name: "Wellness & Fitness Services", icon: Heart, onClick: onBookService },
-    { name: "Care & Support Services", icon: Baby, onClick: onBookService },
-    { name: "Interior & Design Services", icon: Sofa, onClick: onBookService },
-    { name: "Event & Special Services", icon: PartyPopper, onClick: onBookService },
-    { name: "Custom Contractor Services", icon: HardHat, onClick: onBookService },
+  // Construction & Trades Contractors
+  const constructionServices = [
+    { name: "Plumbing Contractors", icon: Droplets, type: "Plumbing", onClick: onBookService },
+    { name: "Electrical Contractors", icon: Zap, type: "Electrical", onClick: onBookService },
+    { name: "HVAC Contractors", icon: Wind, type: "HVAC", onClick: onBookService },
+    { name: "Roofing Contractors", icon: Home, type: "Roofing", onClick: onBookService },
+    { name: "Painting Contractors", icon: PaintBucket, type: "Painting", onClick: onBookService },
+    { name: "Framing/Carpentry", icon: Frame, type: "Framing", onClick: onBookService },
+    { name: "Masonry Contractors", icon: BrickWall, type: "Masonry", onClick: onBookService },
+    { name: "Excavation Contractors", icon: Drill, type: "Excavation", onClick: onBookService },
+  ];
+
+  // Home Maintenance & Repair Contractors
+  const maintenanceServices = [
+    { name: "General Repair & Maintenance", icon: Wrench, type: "General Maintenance", onClick: onBookService },
+    { name: "Appliance Repair Specialists", icon: Refrigerator, type: "Appliance Repair", onClick: onBookService },
+    { name: "Pest Control Contractors", icon: HardHat, type: "Pest Control", onClick: onBookService },
+    { name: "Cleaning Service Contractors", icon: Sparkles, type: "Cleaning", onClick: onBookService },
+  ];
+
+  // Design & Finishing Contractors
+  const designServices = [
+    { name: "Interior Design Contractors", icon: Sofa, type: "Interior Design", onClick: onBookService },
+    { name: "Landscaping Contractors", icon: Trees, type: "Landscaping", onClick: onBookService },
+    { name: "Flooring Contractors", icon: Hammer, type: "Flooring", onClick: onBookService },
+  ];
+
+  // Specialty Service Professionals
+  const specialtyServices = [
+    { name: "Beauty & Personal Care", icon: Scissors, type: "Beauty Services", onClick: onBookService },
+    { name: "Wellness & Fitness", icon: Heart, type: "Wellness", onClick: onBookService },
+    { name: "Care & Support Services", icon: Baby, type: "Care Services", onClick: onBookService },
+    { name: "Event Service Professionals", icon: PartyPopper, type: "Event Services", onClick: onBookService },
   ];
 
   const amcOptions = [
@@ -145,24 +166,24 @@ export function Header({
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-6">
-              {/* Services Mega Dropdown with All Options */}
+              {/* Services Mega Dropdown - Organized by Contractor Type */}
               <div className="relative group">
                 <button className="text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-1 text-base">
                   Services
                   <ChevronDown className="w-4 h-4" />
                 </button>
-                {/* Large Mega Dropdown with 3 sections */}
-                <div className="absolute top-full left-0 mt-2 w-[650px] bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                {/* Large Mega Dropdown with contractor categories */}
+                <div className="absolute top-full left-0 mt-2 w-[750px] bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 max-h-[600px] overflow-y-auto">
                   <div className="p-4">
-                    {/* Regular Services Section */}
+                    {/* Construction & Trades Contractors */}
                     <div className="mb-4">
-                      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 px-2">Professional Services</h3>
+                      <h3 className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-2 px-2">Construction & Trades Contractors</h3>
                       <div className="grid grid-cols-2 gap-1">
-                        {serviceOptions.map((option) => (
+                        {constructionServices.map((option) => (
                           <button
                             key={option.name}
                             onClick={option.onClick}
-                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-base"
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg"
                           >
                             <option.icon className="w-5 h-5 flex-shrink-0" />
                             <span className="text-sm">{option.name}</span>
@@ -171,7 +192,63 @@ export function Header({
                       </div>
                     </div>
                     
-                    {/* Divider */}
+                    <div className="border-t border-gray-200 my-3"></div>
+                    
+                    {/* Home Maintenance & Repair */}
+                    <div className="mb-4">
+                      <h3 className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-2 px-2">Home Maintenance & Repair</h3>
+                      <div className="grid grid-cols-2 gap-1">
+                        {maintenanceServices.map((option) => (
+                          <button
+                            key={option.name}
+                            onClick={option.onClick}
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg"
+                          >
+                            <option.icon className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-sm">{option.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="border-t border-gray-200 my-3"></div>
+                    
+                    {/* Design & Finishing */}
+                    <div className="mb-4">
+                      <h3 className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-2 px-2">Design & Finishing Contractors</h3>
+                      <div className="grid grid-cols-2 gap-1">
+                        {designServices.map((option) => (
+                          <button
+                            key={option.name}
+                            onClick={option.onClick}
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg"
+                          >
+                            <option.icon className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-sm">{option.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="border-t border-gray-200 my-3"></div>
+                    
+                    {/* Specialty Services */}
+                    <div className="mb-4">
+                      <h3 className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-2 px-2">Specialty Service Professionals</h3>
+                      <div className="grid grid-cols-2 gap-1">
+                        {specialtyServices.map((option) => (
+                          <button
+                            key={option.name}
+                            onClick={option.onClick}
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg"
+                          >
+                            <option.icon className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-sm">{option.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
                     <div className="border-t border-gray-200 my-3"></div>
                     
                     {/* AMC Plans Section */}
@@ -182,7 +259,7 @@ export function Header({
                           <button
                             key={option.name}
                             onClick={option.onClick}
-                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-base"
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg"
                           >
                             <option.icon className="w-5 h-5 flex-shrink-0" />
                             <span className="text-sm">{option.name}</span>
@@ -191,10 +268,9 @@ export function Header({
                       </div>
                     </div>
                     
-                    {/* Divider */}
                     <div className="border-t border-gray-200 my-3"></div>
                     
-                    {/* Contractor Section */}
+                    {/* Contractor Registration */}
                     <div>
                       <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 px-2">For Professionals</h3>
                       <div className="grid grid-cols-1 gap-1">
@@ -202,7 +278,7 @@ export function Header({
                           <button
                             key={option.name}
                             onClick={option.onClick}
-                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-base"
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg"
                           >
                             <option.icon className="w-5 h-5 flex-shrink-0" />
                             <span className="text-sm">{option.name}</span>
@@ -255,9 +331,9 @@ export function Header({
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden py-4 border-t border-gray-200">
+            <div className="lg:hidden py-4 border-t border-gray-200 max-h-[600px] overflow-y-auto">
               <nav className="flex flex-col space-y-3">
-                {/* Mobile Services Accordion (Combined with AMC & Contractor) */}
+                {/* Mobile Services Accordion */}
                 <div>
                   <button
                     onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
@@ -268,11 +344,74 @@ export function Header({
                   </button>
                   {mobileServicesOpen && (
                     <div className="mt-2 space-y-3 pl-4">
-                      {/* Professional Services */}
+                      {/* Construction & Trades */}
                       <div>
-                        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 px-2">Professional Services</h4>
+                        <h4 className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1 px-2">Construction & Trades</h4>
                         <div className="space-y-1">
-                          {serviceOptions.map((option) => (
+                          {constructionServices.map((option) => (
+                            <button
+                              key={option.name}
+                              onClick={() => {
+                                option.onClick();
+                                setMobileMenuOpen(false);
+                                setMobileServicesOpen(false);
+                              }}
+                              className="flex items-center gap-3 w-full text-left text-gray-600 hover:text-blue-600 transition-colors py-2 text-sm"
+                            >
+                              <option.icon className="w-4 h-4" />
+                              <span>{option.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Maintenance & Repair */}
+                      <div className="pt-2 border-t border-gray-100">
+                        <h4 className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1 px-2">Maintenance & Repair</h4>
+                        <div className="space-y-1">
+                          {maintenanceServices.map((option) => (
+                            <button
+                              key={option.name}
+                              onClick={() => {
+                                option.onClick();
+                                setMobileMenuOpen(false);
+                                setMobileServicesOpen(false);
+                              }}
+                              className="flex items-center gap-3 w-full text-left text-gray-600 hover:text-blue-600 transition-colors py-2 text-sm"
+                            >
+                              <option.icon className="w-4 h-4" />
+                              <span>{option.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Design & Finishing */}
+                      <div className="pt-2 border-t border-gray-100">
+                        <h4 className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1 px-2">Design & Finishing</h4>
+                        <div className="space-y-1">
+                          {designServices.map((option) => (
+                            <button
+                              key={option.name}
+                              onClick={() => {
+                                option.onClick();
+                                setMobileMenuOpen(false);
+                                setMobileServicesOpen(false);
+                              }}
+                              className="flex items-center gap-3 w-full text-left text-gray-600 hover:text-blue-600 transition-colors py-2 text-sm"
+                            >
+                              <option.icon className="w-4 h-4" />
+                              <span>{option.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Specialty Services */}
+                      <div className="pt-2 border-t border-gray-100">
+                        <h4 className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1 px-2">Specialty Services</h4>
+                        <div className="space-y-1">
+                          {specialtyServices.map((option) => (
                             <button
                               key={option.name}
                               onClick={() => {

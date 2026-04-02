@@ -13,12 +13,6 @@ export function Hero({
     <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
         <div className="max-w-3xl">
-          <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6">
-            <span className="text-sm">
-              Complete Service Ecosystem
-            </span>
-          </div>
-
           <p className="text-xl sm:text-2xl mb-4 text-blue-100">
             Professional services.
             <br />

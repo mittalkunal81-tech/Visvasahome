@@ -1,4 +1,8 @@
-import { CheckCircle, ArrowLeft, Phone, Clock, Shield, Wrench, UtensilsCrossed, Zap, Wind, Droplet, FileCheck, Star, Wifi, ChefHat } from "lucide-react";
+import {
+  UtensilsCrossed, Shield, Clock, FileCheck, Star,
+  Zap, Wind, Droplet, ChefHat, Wifi,
+} from "lucide-react";
+import { AMCPageTemplate, AMCPlan, ServiceCategory, AMCBenefit, AMCFAQ, HeroStat } from "./AMCPageTemplate";
 
 interface AMCHospitalityProps {
   onBack: () => void;
@@ -6,31 +10,45 @@ interface AMCHospitalityProps {
 }
 
 export function AMCHospitality({ onBack, onBookNow }: AMCHospitalityProps) {
-  const plans = [
+  const heroStats: HeroStat[] = [
+    { value: "1,500+", label: "Properties Maintained" },
+    { value: "4.8/5", label: "Client Satisfaction" },
+    { value: "18+", label: "Cities Covered" },
+    { value: "24/7", label: "Emergency Support" },
+  ];
+
+  const plans: AMCPlan[] = [
     {
       name: "Restaurant",
       price: "₹19,999",
-      period: "per year",
+      monthlyEquiv: "₹1,666",
+      period: "/ year",
       description: "Essential maintenance for food outlets",
+      bestFor: "QSRs, cafes & standalone restaurants",
       features: [
         "Monthly electrical inspection",
-        "AC & ventilation (quarterly)",
+        "AC & ventilation — quarterly",
         "Kitchen equipment power backup",
         "Plumbing & drainage systems",
         "Exhaust & chimney cleaning",
         "Dining area maintenance",
-        "Emergency support available"
+        "Emergency support available",
+        "Digital service log",
       ],
-      popular: false
+      notIncluded: ["Swimming pool systems", "Laundry equipment", "24/7 dedicated support"],
+      popular: false,
+      badge: "F&B",
     },
     {
       name: "Hotel",
       price: "₹1,29,999",
-      period: "per year",
+      monthlyEquiv: "₹10,833",
+      period: "/ year",
       description: "Comprehensive facility management",
+      bestFor: "3-star & 4-star hotels",
       features: [
         "Weekly facility inspections",
-        "All room AC maintenance (monthly)",
+        "All room AC maintenance — monthly",
         "Guest room electrical systems",
         "Kitchen & restaurant equipment",
         "Lobby & common area upkeep",
@@ -38,15 +56,18 @@ export function AMCHospitality({ onBack, onBookNow }: AMCHospitalityProps) {
         "Laundry equipment maintenance",
         "Fire & safety compliance",
         "24/7 priority support",
-        "Dedicated facility manager"
+        "Dedicated facility manager",
       ],
-      popular: true
+      popular: true,
+      badge: "Most Popular",
     },
     {
       name: "Resort Complex",
       price: "Custom",
+      monthlyEquiv: undefined,
       period: "tailored pricing",
       description: "Complete hospitality facility management",
+      bestFor: "Resorts, heritage hotels & 5-star properties",
       features: [
         "Comprehensive property assessment",
         "All guest accommodation systems",
@@ -57,276 +78,117 @@ export function AMCHospitality({ onBack, onBookNow }: AMCHospitalityProps) {
         "Central HVAC management",
         "Water treatment & pools",
         "On-site technical team",
-        "Guest experience focus"
+        "Guest experience-first protocols",
       ],
-      popular: false
-    }
+      popular: false,
+      badge: "Resort",
+    },
   ];
 
-  const servicesIncluded = [
+  const servicesIncluded: ServiceCategory[] = [
     {
       icon: Zap,
       title: "Electrical Systems",
-      items: ["Guest room wiring & outlets", "Lobby & common area lighting", "Kitchen equipment circuits", "Emergency backup systems"]
+      items: ["Guest room wiring & outlets", "Lobby & common area lighting", "Kitchen equipment circuits", "Emergency backup systems"],
     },
     {
       icon: Wind,
       title: "HVAC & Comfort",
-      items: ["Room AC individual servicing", "Central air conditioning", "Kitchen ventilation", "Temperature control systems"]
+      items: ["Room AC individual servicing", "Central air conditioning", "Kitchen ventilation", "Temperature control systems"],
     },
     {
       icon: ChefHat,
       title: "Kitchen Equipment",
-      items: ["Commercial appliance maintenance", "Exhaust & chimney cleaning", "Refrigeration systems", "Gas pipeline inspection"]
+      items: ["Commercial appliance maintenance", "Exhaust & chimney cleaning", "Refrigeration systems", "Gas pipeline inspection"],
     },
     {
       icon: Droplet,
       title: "Water & Sanitation",
-      items: ["Hot water systems", "Swimming pool filtration", "Bathroom fixture maintenance", "Water treatment systems"]
+      items: ["Hot water systems", "Swimming pool filtration", "Bathroom fixture maintenance", "Water treatment systems"],
     },
     {
       icon: Wifi,
       title: "Guest Services",
-      items: ["Electrical outlet functionality", "Lighting in all guest areas", "Climate control systems", "Safety equipment checkup"]
+      items: ["Electrical outlet functionality", "Lighting in all guest areas", "Climate control systems", "Safety equipment checkup"],
     },
     {
       icon: Star,
       title: "Compliance & Quality",
-      items: ["Fire safety inspection", "Health department compliance", "Emergency exit maintenance", "Quality standards documentation"]
-    }
+      items: ["Fire safety inspection", "Health department compliance", "Emergency exit maintenance", "Quality standards documentation"],
+    },
   ];
 
-  const benefits = [
+  const benefits: AMCBenefit[] = [
     {
       icon: Shield,
       title: "Guest Satisfaction",
-      description: "Reliable facility systems ensure comfortable stays and positive guest experiences, protecting reputation."
+      description: "Reliable facility systems ensure comfortable stays and protect your property's reputation.",
+      stat: "5★",
     },
     {
       icon: Clock,
-      title: "24/7 Availability",
-      description: "Round-the-clock emergency support ensures guest comfort is never compromised by facility issues."
+      title: "Round-the-Clock",
+      description: "24/7 emergency support ensures guest comfort is never compromised by a facility issue.",
+      stat: "24/7",
     },
     {
       icon: FileCheck,
       title: "Regulatory Compliance",
-      description: "Regular inspections ensure compliance with hospitality, health, and safety regulatory standards."
+      description: "Regular inspections ensure compliance with hospitality, health, and fire safety regulations.",
+      stat: "100%",
     },
     {
       icon: Star,
-      title: "Quality Standards",
-      description: "Consistent maintenance supports star ratings and quality certifications for hospitality properties."
-    }
+      title: "Star Rating Ready",
+      description: "Consistent maintenance supports star ratings and quality certifications for your property.",
+      stat: "Audit",
+    },
+  ];
+
+  const faqs: AMCFAQ[] = [
+    {
+      question: "How do you ensure guest experience isn't disrupted?",
+      answer: "All routine maintenance is scheduled during low-occupancy periods or early morning/late night hours. Our team coordinates with your front desk and housekeeping before entering guest areas. Guest-facing work is always done discreetly.",
+    },
+    {
+      question: "Are kitchen and commercial refrigeration systems covered?",
+      answer: "Yes. Commercial kitchen appliances, exhaust hoods, chimneys, gas pipelines, and refrigeration systems are all covered. The scope is defined based on your kitchen size and equipment inventory during the property assessment.",
+    },
+    {
+      question: "Is swimming pool maintenance included?",
+      answer: "Pool filtration and circulation systems are included from the Hotel plan onwards. Physical pool cleaning and water treatment chemical management can be added as a supplementary service.",
+    },
+    {
+      question: "Can you help maintain our fire safety compliance?",
+      answer: "Yes. All plans include fire safety inspections and maintenance of fire extinguishers, emergency lighting, exit signage, and fire alarms. We provide documentation suitable for fire NOC renewals and hotel licensing.",
+    },
+    {
+      question: "Do you handle spa and wellness equipment?",
+      answer: "Yes. The Resort Complex plan includes spa and wellness facility systems — HVAC in treatment rooms, water heating, jacuzzi systems, and steam generator maintenance.",
+    },
+    {
+      question: "What if a critical system fails at 2 AM?",
+      answer: "The Hotel and Resort Complex plans include 24/7 emergency support. Our on-call technicians are dispatched immediately. Critical guest-facing systems (AC, hot water, power) are treated as priority emergencies at all hours.",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <button
-              onClick={onBack}
-              className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="text-base">Back</span>
-            </button>
-            <div className="text-2xl text-blue-600">
-              VisvasaHome
-            </div>
-            <a
-              href="tel:+919057567160"
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              <span className="hidden sm:inline text-base">Contact Us</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full mb-6">
-              <UtensilsCrossed className="w-5 h-5 text-blue-600" />
-              <span className="text-blue-600 text-base">Hospitality Facility Solutions</span>
-            </div>
-            <h1 className="mb-6 text-gray-900">
-              AMC for Hospitality Properties
-            </h1>
-            <p className="mb-8 text-gray-600 text-lg leading-relaxed">
-              Specialized facility maintenance for hotels, restaurants, and resorts. Ensure exceptional guest experiences with reliable systems and quality-focused service standards.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={onBookNow}
-                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-base"
-              >
-                Request Assessment
-              </button>
-              <a
-                href="tel:+919057567160"
-                className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-base"
-              >
-                Speak with Expert
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Plans Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Hospitality Maintenance Plans</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Guest-focused service coverage designed for hospitality property requirements and quality standards.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-xl border ${
-                  plan.popular
-                    ? "border-blue-600 shadow-xl relative"
-                    : "border-gray-200 shadow-sm"
-                } overflow-hidden`}
-              >
-                {plan.popular && (
-                  <div className="bg-blue-600 text-white text-center py-2 text-sm text-base">
-                    Most Popular
-                  </div>
-                )}
-                <div className="p-8">
-                  <h3 className="mb-2 text-gray-900">{plan.name}</h3>
-                  <div className="mb-2">
-                    <span className="text-4xl text-gray-900">{plan.price}</span>
-                    <span className="text-gray-500 ml-2 text-base">{plan.period}</span>
-                  </div>
-                  <p className="text-gray-600 mb-6 text-base leading-relaxed">{plan.description}</p>
-
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-700 text-base leading-relaxed">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <button
-                    onClick={onBookNow}
-                    className={`w-full py-3 rounded-lg transition-colors text-base ${
-                      plan.popular
-                        ? "bg-blue-600 text-white hover:bg-blue-700"
-                        : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                    }`}
-                  >
-                    {plan.price === "Custom" ? "Contact for Pricing" : "Get Started"}
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Included */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Specialized Service Coverage</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Complete hospitality facility maintenance focused on guest comfort and quality standards.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {servicesIncluded.map((service) => (
-              <div key={service.title} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                <service.icon className="w-10 h-10 text-blue-600 mb-4" />
-                <h3 className="mb-4 text-gray-900">{service.title}</h3>
-                <ul className="space-y-2">
-                  {service.items.map((item, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-blue-600 mt-1.5">•</span>
-                      <span className="text-gray-600 text-base leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Why Hospitality AMC?</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Specialized maintenance ensures guest satisfaction and supports quality hospitality standards.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit) => (
-              <div key={benefit.title} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                  <benefit.icon className="w-8 h-8 text-blue-600" />
-                </div>
-                <h3 className="mb-2 text-gray-900">{benefit.title}</h3>
-                <p className="text-gray-600 text-base leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="mb-4 text-white">Elevate Guest Experience with Reliable Systems</h2>
-          <p className="mb-8 text-blue-100 text-lg leading-relaxed">
-            Get a specialized facility assessment and customized maintenance plan for your hospitality property.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onBookNow}
-              className="px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-base"
-            >
-              Request Assessment
-            </button>
-            <a
-              href="tel:+919057567160"
-              className="px-8 py-3 border border-white text-white rounded-lg hover:bg-blue-700 transition-colors text-base"
-            >
-              Call +91 905 7567 160
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer Note */}
-      <div className="bg-gray-50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-600 text-sm">
-            <p className="mb-2 leading-relaxed">
-              All services performed by hospitality facility maintenance specialists. Contracts include quality standards and compliance documentation.
-            </p>
-            <p className="leading-relaxed">
-              Terms and conditions apply. Pricing customized based on property size and specific hospitality requirements.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AMCPageTemplate
+      onBack={onBack}
+      onBookNow={onBookNow}
+      pageIcon={UtensilsCrossed}
+      badge="Hospitality Facility Solutions"
+      title="AMC for Hospitality Properties"
+      subtitle="Specialized facility maintenance for hotels, restaurants, and resorts. Protect guest experience and reputation with reliable systems and quality-focused service standards."
+      heroStats={heroStats}
+      plans={plans}
+      servicesIncluded={servicesIncluded}
+      benefits={benefits}
+      faqs={faqs}
+      ctaTitle="Elevate Guest Experience with Reliable Systems"
+      ctaSubtitle="Get a specialized facility assessment and customized maintenance plan for your hospitality property."
+      primaryCta="Request Assessment"
+      footerNote="All services performed by hospitality facility maintenance specialists. Guest-first protocols followed at all times. Terms apply."
+    />
   );
 }

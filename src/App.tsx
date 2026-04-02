@@ -3,7 +3,6 @@ import { Hero } from './components/Hero';
 import { ServicesOffered } from './components/ServicesOffered';
 import { Differentiation } from './components/Differentiation';
 import { ForContractors } from './components/ForContractors';
-import { AboutUs } from './components/AboutUs';
 import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 import { RegisterContractor } from './components/RegisterContractor';
@@ -20,9 +19,11 @@ import { AMCHealthcare } from './components/AMCHealthcare';
 import { AMCEducational } from './components/AMCEducational';
 import { AMCHospitality } from './components/AMCHospitality';
 import { AMCSociety } from './components/AMCSociety';
+import { AboutUsPage } from './components/AboutUsPage';
+import { OurMissionPage } from './components/OurMissionPage';
 import { useState } from 'react';
 
-type PageType = 'home' | 'register-contractor' | 'get-started-customer' | 'join-professional' | 'benefits' | 'training-support' | 'success-stories' | 'amc-office' | 'amc-home' | 'amc-commercial' | 'amc-industrial' | 'amc-healthcare' | 'amc-educational' | 'amc-hospitality' | 'amc-society';
+type PageType = 'home' | 'register-contractor' | 'get-started-customer' | 'join-professional' | 'benefits' | 'training-support' | 'success-stories' | 'amc-office' | 'amc-home' | 'amc-commercial' | 'amc-industrial' | 'amc-healthcare' | 'amc-educational' | 'amc-hospitality' | 'amc-society' | 'about-us' | 'our-mission';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -84,6 +85,14 @@ export default function App() {
     return <AMCSociety onBack={() => setCurrentPage('home')} onBookNow={() => setCurrentPage('get-started-customer')} />;
   }
 
+  if (currentPage === 'about-us') {
+    return <AboutUsPage onBack={() => setCurrentPage('home')} onNavigate={(page: PageType) => setCurrentPage(page)} />;
+  }
+
+  if (currentPage === 'our-mission') {
+    return <OurMissionPage onBack={() => setCurrentPage('home')} onNavigate={(page: PageType) => setCurrentPage(page)} />;
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Header 
@@ -99,12 +108,12 @@ export default function App() {
         onAMCEducational={() => setCurrentPage('amc-educational')}
         onAMCHospitality={() => setCurrentPage('amc-hospitality')}
         onAMCSociety={() => setCurrentPage('amc-society')}
+        onHome={() => setCurrentPage('home')}
       />
       <Hero onGetStarted={() => setCurrentPage('get-started-customer')} onRegisterContractor={() => setCurrentPage('register-contractor')} />
-      <ServicesOffered />
+      <ServicesOffered onServiceClick={() => setCurrentPage('get-started-customer')} />
       <Differentiation />
       <ForContractors onRegisterContractor={() => setCurrentPage('register-contractor')} />
-      <AboutUs />
       <CTASection onGetStarted={() => setCurrentPage('get-started-customer')} onRegisterContractor={() => setCurrentPage('register-contractor')} />
       <Footer 
         onNavigate={(page: PageType) => setCurrentPage(page)}

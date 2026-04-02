@@ -1,4 +1,8 @@
-import { CheckCircle, ArrowLeft, Phone, Clock, Shield, Wrench, Factory, Zap, Wind, Droplet, FileCheck, AlertTriangle, Cog, Flame } from "lucide-react";
+import {
+  Factory, Shield, Clock, FileCheck, AlertTriangle,
+  Zap, Wind, Droplet, Cog, Flame,
+} from "lucide-react";
+import { AMCPageTemplate, AMCPlan, ServiceCategory, AMCBenefit, AMCFAQ, HeroStat } from "./AMCPageTemplate";
 
 interface AMCIndustrialProps {
   onBack: () => void;
@@ -6,12 +10,21 @@ interface AMCIndustrialProps {
 }
 
 export function AMCIndustrial({ onBack, onBookNow }: AMCIndustrialProps) {
-  const plans = [
+  const heroStats: HeroStat[] = [
+    { value: "500+", label: "Industrial Units Served" },
+    { value: "4.7/5", label: "Client Satisfaction" },
+    { value: "15+", label: "Cities Covered" },
+    { value: "2hr", label: "Emergency Response" },
+  ];
+
+  const plans: AMCPlan[] = [
     {
       name: "Workshop",
       price: "₹49,999",
-      period: "per year",
-      description: "Essential maintenance for small units",
+      monthlyEquiv: "₹4,166",
+      period: "/ year",
+      description: "Essential maintenance for small industrial units",
+      bestFor: "Small workshops & fabrication units",
       features: [
         "Monthly electrical inspection",
         "Heavy machinery basic checkup",
@@ -19,15 +32,20 @@ export function AMCIndustrial({ onBack, onBookNow }: AMCIndustrialProps) {
         "Plumbing & drainage systems",
         "Lighting & power distribution",
         "Safety compliance review",
-        "Standard response time"
+        "Standard response time",
+        "Digital maintenance log",
       ],
-      popular: false
+      notIncluded: ["Effluent treatment systems", "On-site technician", "Regulatory reporting"],
+      popular: false,
+      badge: "Starter",
     },
     {
       name: "Manufacturing",
       price: "₹1,49,999",
-      period: "per year",
+      monthlyEquiv: "₹12,499",
+      period: "/ year",
       description: "Comprehensive facility management",
+      bestFor: "Mid-scale manufacturing plants",
       features: [
         "Weekly facility inspections",
         "All electrical systems management",
@@ -37,15 +55,19 @@ export function AMCIndustrial({ onBack, onBookNow }: AMCIndustrialProps) {
         "Water & waste management",
         "Safety equipment inspection",
         "24/7 priority support",
-        "Dedicated facility manager"
+        "Dedicated facility manager",
+        "Monthly compliance reporting",
       ],
-      popular: true
+      popular: true,
+      badge: "Most Popular",
     },
     {
       name: "Large Industrial",
       price: "Custom",
+      monthlyEquiv: undefined,
       period: "tailored pricing",
       description: "Complete industrial facility management",
+      bestFor: "Large factories & industrial parks",
       features: [
         "Comprehensive facility assessment",
         "Preventive maintenance scheduling",
@@ -55,276 +77,118 @@ export function AMCIndustrial({ onBack, onBookNow }: AMCIndustrialProps) {
         "Fire & safety compliance",
         "On-site technician team",
         "Quarterly regulatory reporting",
-        "Emergency response protocol"
+        "Emergency response protocol",
+        "SLA-backed service guarantees",
       ],
-      popular: false
-    }
+      popular: false,
+      badge: "Enterprise",
+    },
   ];
 
-  const servicesIncluded = [
+  const servicesIncluded: ServiceCategory[] = [
     {
       icon: Zap,
       title: "Electrical Systems",
-      items: ["HT/LT panel maintenance", "Transformer servicing", "Generator checkup", "Power distribution systems"]
+      items: ["HT/LT panel maintenance", "Transformer servicing", "Generator checkup", "Power distribution systems"],
     },
     {
       icon: Wind,
       title: "HVAC & Ventilation",
-      items: ["Industrial AC servicing", "Exhaust system maintenance", "Air quality control", "Cooling tower upkeep"]
+      items: ["Industrial AC servicing", "Exhaust system maintenance", "Air quality control", "Cooling tower upkeep"],
     },
     {
       icon: Flame,
       title: "Fire & Safety",
-      items: ["Fire extinguisher inspection", "Sprinkler system testing", "Emergency exit maintenance", "Safety signage updates"]
+      items: ["Fire extinguisher inspection", "Sprinkler system testing", "Emergency exit maintenance", "Safety signage updates"],
     },
     {
       icon: Cog,
       title: "Machinery Support",
-      items: ["Equipment lubrication", "Belt & pulley inspection", "Motor maintenance", "Conveyor system checkup"]
+      items: ["Equipment lubrication", "Belt & pulley inspection", "Motor maintenance", "Conveyor system checkup"],
     },
     {
       icon: Droplet,
       title: "Water & Waste",
-      items: ["Water treatment systems", "Drainage maintenance", "Sewage system upkeep", "Tank cleaning services"]
+      items: ["Water treatment systems", "Drainage maintenance", "Sewage system upkeep", "Tank cleaning services"],
     },
     {
       icon: AlertTriangle,
       title: "Safety Compliance",
-      items: ["Safety audit & inspection", "Compliance documentation", "Emergency protocol review", "Regulatory reporting"]
-    }
+      items: ["Safety audit & inspection", "Compliance documentation", "Emergency protocol review", "Regulatory reporting"],
+    },
   ];
 
-  const benefits = [
+  const benefits: AMCBenefit[] = [
     {
       icon: Shield,
       title: "Operational Continuity",
-      description: "Preventive maintenance reduces unexpected breakdowns and ensures smooth production operations."
+      description: "Preventive maintenance reduces unexpected breakdowns and ensures smooth production operations.",
+      stat: "40%",
     },
     {
       icon: Clock,
-      title: "Scheduled Maintenance",
-      description: "Coordinated service schedules minimize production downtime and maximize facility efficiency."
+      title: "Scheduled Downtime",
+      description: "Coordinated maintenance schedules minimize production downtime and maximize facility efficiency.",
+      stat: "Min.",
     },
     {
       icon: FileCheck,
       title: "Regulatory Compliance",
-      description: "Regular safety inspections and documentation ensure compliance with industrial regulations and standards."
+      description: "Regular safety inspections and documentation ensure compliance with industrial regulations.",
+      stat: "100%",
     },
     {
       icon: AlertTriangle,
       title: "Safety First",
-      description: "Comprehensive safety system maintenance protects workers and ensures a secure industrial environment."
-    }
+      description: "Comprehensive safety system maintenance protects workers and ensures a secure environment.",
+      stat: "Zero",
+    },
+  ];
+
+  const faqs: AMCFAQ[] = [
+    {
+      question: "What industrial facility types do you service?",
+      answer: "We maintain workshops, fabrication units, small to mid-scale manufacturing plants, warehouses, food processing units, and large industrial parks. The scope is customized based on your facility type.",
+    },
+    {
+      question: "Do you handle hazardous areas or specialized equipment?",
+      answer: "Yes, for specific hazardous zones. Our technicians are trained in industrial safety protocols. Highly specialized equipment (CNC machines, custom automation) is assessed separately during the facility visit.",
+    },
+    {
+      question: "How is the emergency response managed?",
+      answer: "All plans include emergency support. The Manufacturing plan guarantees a 4-hour on-site response. Large Industrial plans include a dedicated emergency response protocol with 2-hour response SLAs.",
+    },
+    {
+      question: "Are statutory compliance reports provided?",
+      answer: "Yes. The Manufacturing plan includes monthly compliance logs. The Large Industrial plan includes quarterly reports for factory inspectors, fire safety authorities, and pollution control boards.",
+    },
+    {
+      question: "Can you provide an on-site full-time technician?",
+      answer: "Yes, the Large Industrial plan includes the option for dedicated on-site technician deployment. This can be included as part of the custom scope during the facility assessment.",
+    },
+    {
+      question: "How do you handle routine vs. breakdown maintenance?",
+      answer: "Routine preventive maintenance is scheduled as per a fixed calendar agreed upon contract signing. Breakdown maintenance is attended within the SLA response time of your plan with no additional call-out charges.",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <button
-              onClick={onBack}
-              className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="text-base">Back</span>
-            </button>
-            <div className="text-2xl text-blue-600">
-              VisvasaHome
-            </div>
-            <a
-              href="tel:+919057567160"
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              <span className="hidden sm:inline text-base">Contact Us</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full mb-6">
-              <Factory className="w-5 h-5 text-blue-600" />
-              <span className="text-blue-600 text-base">Industrial Facility Solutions</span>
-            </div>
-            <h1 className="mb-6 text-gray-900">
-              AMC for Industrial Facilities
-            </h1>
-            <p className="mb-8 text-gray-600 text-lg leading-relaxed">
-              Structured facility maintenance for factories, warehouses, and manufacturing units. Ensure operational continuity with comprehensive maintenance and safety compliance.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={onBookNow}
-                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-base"
-              >
-                Request Assessment
-              </button>
-              <a
-                href="tel:+919057567160"
-                className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-base"
-              >
-                Speak with Expert
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Plans Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Industrial Maintenance Plans</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Transparent pricing with comprehensive service coverage tailored to industrial facility requirements.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-xl border ${
-                  plan.popular
-                    ? "border-blue-600 shadow-xl relative"
-                    : "border-gray-200 shadow-sm"
-                } overflow-hidden`}
-              >
-                {plan.popular && (
-                  <div className="bg-blue-600 text-white text-center py-2 text-sm text-base">
-                    Most Popular
-                  </div>
-                )}
-                <div className="p-8">
-                  <h3 className="mb-2 text-gray-900">{plan.name}</h3>
-                  <div className="mb-2">
-                    <span className="text-4xl text-gray-900">{plan.price}</span>
-                    <span className="text-gray-500 ml-2 text-base">{plan.period}</span>
-                  </div>
-                  <p className="text-gray-600 mb-6 text-base leading-relaxed">{plan.description}</p>
-
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-700 text-base leading-relaxed">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <button
-                    onClick={onBookNow}
-                    className={`w-full py-3 rounded-lg transition-colors text-base ${
-                      plan.popular
-                        ? "bg-blue-600 text-white hover:bg-blue-700"
-                        : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                    }`}
-                  >
-                    {plan.price === "Custom" ? "Contact for Pricing" : "Get Started"}
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Included */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Comprehensive Service Coverage</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Complete industrial facility maintenance across all critical systems and safety requirements.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {servicesIncluded.map((service) => (
-              <div key={service.title} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                <service.icon className="w-10 h-10 text-blue-600 mb-4" />
-                <h3 className="mb-4 text-gray-900">{service.title}</h3>
-                <ul className="space-y-2">
-                  {service.items.map((item, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-blue-600 mt-1.5">•</span>
-                      <span className="text-gray-600 text-base leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Why Choose Industrial AMC?</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Structured maintenance ensures safety, compliance, and uninterrupted production operations.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit) => (
-              <div key={benefit.title} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                  <benefit.icon className="w-8 h-8 text-blue-600" />
-                </div>
-                <h3 className="mb-2 text-gray-900">{benefit.title}</h3>
-                <p className="text-gray-600 text-base leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="mb-4 text-white">Ensure Industrial Safety & Continuity</h2>
-          <p className="mb-8 text-blue-100 text-lg leading-relaxed">
-            Get a comprehensive facility assessment and customized maintenance plan for your industrial unit.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onBookNow}
-              className="px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-base"
-            >
-              Request Assessment
-            </button>
-            <a
-              href="tel:+919057567160"
-              className="px-8 py-3 border border-white text-white rounded-lg hover:bg-blue-700 transition-colors text-base"
-            >
-              Call +91 905 7567 160
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer Note */}
-      <div className="bg-gray-50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-600 text-sm">
-            <p className="mb-2 leading-relaxed">
-              All services performed by verified industrial maintenance professionals. Contracts include safety compliance and regulatory reporting.
-            </p>
-            <p className="leading-relaxed">
-              Terms and conditions apply. Pricing customized based on facility size and specific industrial requirements.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AMCPageTemplate
+      onBack={onBack}
+      onBookNow={onBookNow}
+      pageIcon={Factory}
+      badge="Industrial Facility Solutions"
+      title="AMC for Industrial Facilities"
+      subtitle="Structured preventive maintenance for factories, warehouses, and manufacturing units. Ensure operational continuity, safety compliance, and maximum uptime."
+      heroStats={heroStats}
+      plans={plans}
+      servicesIncluded={servicesIncluded}
+      benefits={benefits}
+      faqs={faqs}
+      ctaTitle="Ensure Industrial Safety & Continuity"
+      ctaSubtitle="Get a comprehensive facility assessment and customized maintenance plan for your industrial unit."
+      primaryCta="Request Assessment"
+      footerNote="All services performed by industrial maintenance specialists. Contracts include safety compliance and regulatory reporting. Terms apply."
+    />
   );
 }

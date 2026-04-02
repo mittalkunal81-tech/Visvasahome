@@ -1,6 +1,7 @@
-import { Menu, X, MapPin, Phone, Mail } from "lucide-react";
+import { Menu, X, Phone, Mail, ChevronDown, Home, Building2, Store, Factory, HeartPulse, GraduationCap, UtensilsCrossed, Building, Sparkles, Scissors, Droplets, Zap, Refrigerator, PaintBucket, Heart, Baby, Sofa, PartyPopper, HardHat } from "lucide-react";
 import { useState } from "react";
 import { LocationSelector } from "./LocationSelector";
+import logoImg from "figma:asset/eb512c399380dc0d7f2c91ba581d523880a08201.png";
 
 interface HeaderProps {
   onRegisterContractor: () => void;
@@ -15,6 +16,7 @@ interface HeaderProps {
   onAMCEducational?: () => void;
   onAMCHospitality?: () => void;
   onAMCSociety?: () => void;
+  onHome?: () => void;
 }
 
 export function Header({
@@ -30,8 +32,39 @@ export function Header({
   onAMCEducational,
   onAMCHospitality,
   onAMCSociety,
+  onHome,
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+
+  const serviceOptions = [
+    { name: "Home Cleaning & Sanitation", icon: Sparkles, onClick: onBookService },
+    { name: "Beauty & Grooming Services", icon: Scissors, onClick: onBookService },
+    { name: "Plumbing & Water Solutions", icon: Droplets, onClick: onBookService },
+    { name: "Electrical & Wiring Services", icon: Zap, onClick: onBookService },
+    { name: "Appliance Repair & AC Services", icon: Refrigerator, onClick: onBookService },
+    { name: "Home Improvement & Pest Control", icon: PaintBucket, onClick: onBookService },
+    { name: "Wellness & Fitness Services", icon: Heart, onClick: onBookService },
+    { name: "Care & Support Services", icon: Baby, onClick: onBookService },
+    { name: "Interior & Design Services", icon: Sofa, onClick: onBookService },
+    { name: "Event & Special Services", icon: PartyPopper, onClick: onBookService },
+    { name: "Custom Contractor Services", icon: HardHat, onClick: onBookService },
+  ];
+
+  const amcOptions = [
+    { name: "Home AMC", icon: Home, onClick: onAMCHome },
+    { name: "Office AMC", icon: Building2, onClick: onAMCOffice },
+    { name: "Commercial AMC", icon: Store, onClick: onAMCCommercial },
+    { name: "Industrial AMC", icon: Factory, onClick: onAMCIndustrial },
+    { name: "Healthcare AMC", icon: HeartPulse, onClick: onAMCHealthcare },
+    { name: "Educational AMC", icon: GraduationCap, onClick: onAMCEducational },
+    { name: "Hospitality AMC", icon: UtensilsCrossed, onClick: onAMCHospitality },
+    { name: "Society AMC", icon: Building, onClick: onAMCSociety },
+  ];
+
+  const contractorOptions = [
+    { name: "Register as Contractor", icon: HardHat, onClick: onRegisterContractor },
+  ];
 
   return (
     <>
@@ -41,11 +74,11 @@ export function Header({
           <div className="flex items-center justify-between h-10 text-sm">
             <div className="flex items-center gap-4">
               <a
-                href="mailto:contact@visvasa.com"
+                href="mailto:contact@visvasahome.com"
                 className="flex items-center gap-2 hover:text-blue-100 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                <span className="hidden sm:inline">
+                <span className="hidden sm:inline text-base">
                   contact@visvasahome.com
                 </span>
               </a>
@@ -54,7 +87,7 @@ export function Header({
                 className="flex items-center gap-2 hover:text-blue-100 transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                <span className="hidden sm:inline">
+                <span className="hidden sm:inline text-base">
                   +91 905 7567 160
                 </span>
               </a>
@@ -64,7 +97,7 @@ export function Header({
                 href="https://wa.me/919057567160"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-1 bg-green-500 hover:bg-green-600 rounded transition-colors"
+                className="flex items-center gap-2 px-4 py-1 bg-green-500 hover:bg-green-600 rounded transition-colors text-base"
               >
                 <svg
                   className="w-4 h-4"
@@ -79,7 +112,7 @@ export function Header({
               </a>
               <a
                 href="tel:+919057567160"
-                className="flex items-center gap-2 px-4 py-1 bg-white text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                className="flex items-center gap-2 px-4 py-1 bg-white text-blue-600 hover:bg-blue-50 rounded transition-colors text-base"
               >
                 <Phone className="w-4 h-4" />
                 <span className="hidden sm:inline">
@@ -97,110 +130,111 @@ export function Header({
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <a href="/" className="text-2xl text-blue-600">
-                VisvasaHome
-              </a>
+              <button 
+                onClick={onHome}
+                className="hover:opacity-80 transition-opacity focus:outline-none"
+              >
+                <img
+                  src={logoImg}
+                  alt="VisvasaHome"
+                  className="h-10 w-auto"
+                  style={{ maxWidth: "200px" }}
+                />
+              </button>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <a
-                href="#services"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                Services
-              </a>
+            <nav className="hidden lg:flex items-center space-x-6">
+              {/* Services Mega Dropdown with All Options */}
               <div className="relative group">
-                <button className="text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-1">
-                  AMC Plans
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                <button className="text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-1 text-base">
+                  Services
+                  <ChevronDown className="w-4 h-4" />
                 </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <button
-                    onClick={onAMCHome}
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                  >
-                    Home AMC
-                  </button>
-                  <button
-                    onClick={onAMCOffice}
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-t border-gray-100"
-                  >
-                    Office AMC
-                  </button>
-                  <button
-                    onClick={onAMCCommercial}
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-t border-gray-100"
-                  >
-                    Commercial AMC
-                  </button>
-                  <button
-                    onClick={onAMCIndustrial}
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-t border-gray-100"
-                  >
-                    Industrial AMC
-                  </button>
-                  <button
-                    onClick={onAMCHealthcare}
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-t border-gray-100"
-                  >
-                    Healthcare AMC
-                  </button>
-                  <button
-                    onClick={onAMCEducational}
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-t border-gray-100"
-                  >
-                    Educational AMC
-                  </button>
-                  <button
-                    onClick={onAMCHospitality}
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-t border-gray-100"
-                  >
-                    Hospitality AMC
-                  </button>
-                  <button
-                    onClick={onAMCSociety}
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-t border-gray-100"
-                  >
-                    Society AMC
-                  </button>
+                {/* Large Mega Dropdown with 3 sections */}
+                <div className="absolute top-full left-0 mt-2 w-[650px] bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="p-4">
+                    {/* Regular Services Section */}
+                    <div className="mb-4">
+                      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 px-2">Professional Services</h3>
+                      <div className="grid grid-cols-2 gap-1">
+                        {serviceOptions.map((option) => (
+                          <button
+                            key={option.name}
+                            onClick={option.onClick}
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-base"
+                          >
+                            <option.icon className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-sm">{option.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Divider */}
+                    <div className="border-t border-gray-200 my-3"></div>
+                    
+                    {/* AMC Plans Section */}
+                    <div className="mb-4">
+                      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 px-2">AMC Plans</h3>
+                      <div className="grid grid-cols-2 gap-1">
+                        {amcOptions.map((option) => (
+                          <button
+                            key={option.name}
+                            onClick={option.onClick}
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-base"
+                          >
+                            <option.icon className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-sm">{option.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Divider */}
+                    <div className="border-t border-gray-200 my-3"></div>
+                    
+                    {/* Contractor Section */}
+                    <div>
+                      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 px-2">For Professionals</h3>
+                      <div className="grid grid-cols-1 gap-1">
+                        {contractorOptions.map((option) => (
+                          <button
+                            key={option.name}
+                            onClick={option.onClick}
+                            className="flex items-center gap-3 px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-base"
+                          >
+                            <option.icon className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-sm">{option.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              
               <a
                 href="#how-it-works"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
+                className="text-gray-700 hover:text-blue-600 transition-colors text-base"
               >
                 How It Works
               </a>
-              <a
-                href="#for-contractors"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                For Contractors
-              </a>
-              <a
-                href="#about"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                About Us
-              </a>
-              <div className="pt-2">
-                <LocationSelector
-                  selectedLocation={selectedLocation}
-                  onLocationSelect={onLocationSelect}
-                />
-              </div>
+              
+              <LocationSelector
+                selectedLocation={selectedLocation}
+                onLocationSelect={onLocationSelect}
+              />
+              
               <button
                 onClick={onRegisterContractor}
-                className="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                className="px-5 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-base whitespace-nowrap"
               >
                 Register as Contractor
               </button>
               <button
                 onClick={onBookService}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-base whitespace-nowrap"
               >
                 Book Service
               </button>
@@ -208,7 +242,7 @@ export function Header({
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2"
+              className="lg:hidden p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
@@ -221,93 +255,115 @@ export function Header({
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-gray-200">
-              <nav className="flex flex-col space-y-4">
-                <a
-                  href="#services"
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Services
-                </a>
-                <button
-                  onClick={onAMCHome}
-                  className="text-left text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Home AMC
-                </button>
-                <button
-                  onClick={onAMCOffice}
-                  className="text-left text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Office AMC
-                </button>
-                <button
-                  onClick={onAMCCommercial}
-                  className="text-left text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Commercial AMC
-                </button>
-                <button
-                  onClick={onAMCIndustrial}
-                  className="text-left text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Industrial AMC
-                </button>
-                <button
-                  onClick={onAMCHealthcare}
-                  className="text-left text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Healthcare AMC
-                </button>
-                <button
-                  onClick={onAMCEducational}
-                  className="text-left text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Educational AMC
-                </button>
-                <button
-                  onClick={onAMCHospitality}
-                  className="text-left text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Hospitality AMC
-                </button>
-                <button
-                  onClick={onAMCSociety}
-                  className="text-left text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  Society AMC
-                </button>
+            <div className="lg:hidden py-4 border-t border-gray-200">
+              <nav className="flex flex-col space-y-3">
+                {/* Mobile Services Accordion (Combined with AMC & Contractor) */}
+                <div>
+                  <button
+                    onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                    className="flex items-center justify-between w-full text-gray-700 hover:text-blue-600 transition-colors py-2 text-base"
+                  >
+                    <span>Services</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {mobileServicesOpen && (
+                    <div className="mt-2 space-y-3 pl-4">
+                      {/* Professional Services */}
+                      <div>
+                        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 px-2">Professional Services</h4>
+                        <div className="space-y-1">
+                          {serviceOptions.map((option) => (
+                            <button
+                              key={option.name}
+                              onClick={() => {
+                                option.onClick();
+                                setMobileMenuOpen(false);
+                                setMobileServicesOpen(false);
+                              }}
+                              className="flex items-center gap-3 w-full text-left text-gray-600 hover:text-blue-600 transition-colors py-2 text-sm"
+                            >
+                              <option.icon className="w-4 h-4" />
+                              <span>{option.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* AMC Plans */}
+                      <div className="pt-2 border-t border-gray-100">
+                        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 px-2">AMC Plans</h4>
+                        <div className="space-y-1">
+                          {amcOptions.map((option) => (
+                            <button
+                              key={option.name}
+                              onClick={() => {
+                                option.onClick?.();
+                                setMobileMenuOpen(false);
+                                setMobileServicesOpen(false);
+                              }}
+                              className="flex items-center gap-3 w-full text-left text-gray-600 hover:text-blue-600 transition-colors py-2 text-sm"
+                            >
+                              <option.icon className="w-4 h-4" />
+                              <span>{option.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* For Professionals */}
+                      <div className="pt-2 border-t border-gray-100">
+                        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 px-2">For Professionals</h4>
+                        <div className="space-y-1">
+                          {contractorOptions.map((option) => (
+                            <button
+                              key={option.name}
+                              onClick={() => {
+                                option.onClick();
+                                setMobileMenuOpen(false);
+                                setMobileServicesOpen(false);
+                              }}
+                              className="flex items-center gap-3 w-full text-left text-gray-600 hover:text-blue-600 transition-colors py-2 text-sm"
+                            >
+                              <option.icon className="w-4 h-4" />
+                              <span>{option.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
                 <a
                   href="#how-it-works"
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
+                  className="text-gray-700 hover:text-blue-600 transition-colors py-2 border-t border-gray-100 pt-3 text-base"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   How It Works
                 </a>
-                <a
-                  href="#for-contractors"
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  For Contractors
-                </a>
-                <a
-                  href="#about"
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
-                >
-                  About Us
-                </a>
-                <LocationSelector
-                  selectedLocation={selectedLocation}
-                  onLocationSelect={onLocationSelect}
-                />
+                
+                <div className="pt-3 border-t border-gray-100">
+                  <LocationSelector
+                    selectedLocation={selectedLocation}
+                    onLocationSelect={onLocationSelect}
+                  />
+                </div>
+                
                 <button
-                  onClick={onRegisterContractor}
-                  className="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                  onClick={() => {
+                    onRegisterContractor();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="px-6 py-2.5 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-base mt-3"
                 >
                   Register as Contractor
                 </button>
                 <button
-                  onClick={onBookService}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  onClick={() => {
+                    onBookService();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-base"
                 >
                   Book Service
                 </button>

@@ -5,11 +5,15 @@ interface ServiceCategoryProps {
   title: string;
   services: string[];
   badge: string | null;
+  onClick?: () => void;
 }
 
-export function ServiceCategory({ icon: Icon, title, services, badge }: ServiceCategoryProps) {
+export function ServiceCategory({ icon: Icon, title, services, badge, onClick }: ServiceCategoryProps) {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+    <div 
+      onClick={onClick}
+      className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-100 cursor-pointer"
+    >
       <div className="flex items-start gap-4 mb-4">
         <div className="p-3 bg-blue-50 rounded-lg">
           <Icon className="w-6 h-6 text-blue-600" />

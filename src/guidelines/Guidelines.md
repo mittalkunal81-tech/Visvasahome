@@ -1,4 +1,4 @@
-Visvasa
+Visvasahome
 Brand Identity Guidelines
 
 1. Brand Identity Overview
@@ -197,7 +197,7 @@ Reliability
 
 Accountability
 
-Visvasa
+Visvasahomes
 A Trusted Identity for Local Services
 
 Reliable • Transparent • Local-First • Quality-Driven

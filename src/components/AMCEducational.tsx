@@ -1,4 +1,8 @@
-import { CheckCircle, ArrowLeft, Phone, Clock, Shield, Wrench, GraduationCap, Zap, Wind, Droplet, FileCheck, Users, BookOpen, FlaskConical } from "lucide-react";
+import {
+  GraduationCap, Shield, Clock, FileCheck, Users,
+  Zap, Wind, Droplet, BookOpen, FlaskConical,
+} from "lucide-react";
+import { AMCPageTemplate, AMCPlan, ServiceCategory, AMCBenefit, AMCFAQ, HeroStat } from "./AMCPageTemplate";
 
 interface AMCEducationalProps {
   onBack: () => void;
@@ -6,28 +10,42 @@ interface AMCEducationalProps {
 }
 
 export function AMCEducational({ onBack, onBookNow }: AMCEducationalProps) {
-  const plans = [
+  const heroStats: HeroStat[] = [
+    { value: "1,200+", label: "Institutions Served" },
+    { value: "4.8/5", label: "Client Satisfaction" },
+    { value: "18+", label: "Cities Covered" },
+    { value: "Break-time", label: "Maintenance Scheduling" },
+  ];
+
+  const plans: AMCPlan[] = [
     {
       name: "School Basic",
       price: "₹24,999",
-      period: "per year",
+      monthlyEquiv: "₹2,083",
+      period: "/ year",
       description: "Essential maintenance for small schools",
+      bestFor: "Primary & secondary schools",
       features: [
         "Monthly electrical inspection",
-        "AC servicing in key areas (quarterly)",
+        "AC servicing in key areas — quarterly",
         "Classroom lighting maintenance",
         "Plumbing & sanitary systems",
         "Playground equipment checkup",
         "Safety compliance review",
-        "Service visits: 12 per year"
+        "12 service visits / year",
+        "Digital maintenance log",
       ],
-      popular: false
+      notIncluded: ["Laboratory gas systems", "Sports complex", "24/7 support"],
+      popular: false,
+      badge: "School",
     },
     {
       name: "Educational Campus",
       price: "₹89,999",
-      period: "per year",
-      description: "Comprehensive facility management",
+      monthlyEquiv: "₹7,499",
+      period: "/ year",
+      description: "Comprehensive multi-building management",
+      bestFor: "Senior secondary & junior colleges",
       features: [
         "Weekly facility inspections",
         "All AC & ventilation systems",
@@ -38,15 +56,18 @@ export function AMCEducational({ onBack, onBookNow }: AMCEducationalProps) {
         "Water purification & tanks",
         "Fire & safety compliance",
         "24/7 emergency support",
-        "Dedicated facility coordinator"
+        "Dedicated facility coordinator",
       ],
-      popular: true
+      popular: true,
+      badge: "Most Popular",
     },
     {
       name: "University Complex",
       price: "Custom",
+      monthlyEquiv: undefined,
       period: "tailored pricing",
       description: "Complete campus facility management",
+      bestFor: "Universities & engineering colleges",
       features: [
         "Comprehensive campus assessment",
         "All academic building maintenance",
@@ -57,276 +78,117 @@ export function AMCEducational({ onBack, onBookNow }: AMCEducationalProps) {
         "Campus-wide electrical & HVAC",
         "Fire safety & emergency systems",
         "On-site technical team",
-        "Quarterly compliance reporting"
+        "Quarterly compliance reporting",
       ],
-      popular: false
-    }
+      popular: false,
+      badge: "University",
+    },
   ];
 
-  const servicesIncluded = [
+  const servicesIncluded: ServiceCategory[] = [
     {
       icon: Zap,
       title: "Electrical Systems",
-      items: ["Classroom lighting maintenance", "Power backup systems", "Computer lab circuits", "Campus-wide distribution"]
+      items: ["Classroom lighting maintenance", "Power backup systems", "Computer lab circuits", "Campus-wide distribution"],
     },
     {
       icon: Wind,
       title: "HVAC & Ventilation",
-      items: ["Classroom AC servicing", "Auditorium cooling systems", "Lab ventilation", "Air quality control"]
+      items: ["Classroom AC servicing", "Auditorium cooling systems", "Lab ventilation", "Air quality control"],
     },
     {
       icon: FlaskConical,
       title: "Laboratory Systems",
-      items: ["Science lab electrical work", "Fume hood maintenance", "Gas pipeline inspection", "Safety equipment checkup"]
+      items: ["Science lab electrical work", "Fume hood maintenance", "Gas pipeline inspection", "Safety equipment checkup"],
     },
     {
       icon: Droplet,
       title: "Water & Sanitation",
-      items: ["RO water purification", "Washroom maintenance", "Water tank cleaning", "Drainage systems"]
+      items: ["RO water purification", "Washroom maintenance", "Water tank cleaning", "Drainage systems"],
     },
     {
       icon: BookOpen,
       title: "Learning Spaces",
-      items: ["Library maintenance", "Auditorium systems", "Smart classroom equipment", "Furniture & fixture repairs"]
+      items: ["Library maintenance", "Auditorium systems", "Smart classroom equipment", "Furniture & fixture repairs"],
     },
     {
       icon: Users,
       title: "Safety & Compliance",
-      items: ["Fire safety inspection", "Emergency exit maintenance", "Playground safety checkup", "Regulatory compliance"]
-    }
+      items: ["Fire safety inspection", "Emergency exit maintenance", "Playground safety checkup", "Regulatory compliance"],
+    },
   ];
 
-  const benefits = [
+  const benefits: AMCBenefit[] = [
     {
       icon: Shield,
       title: "Student Safety",
-      description: "Regular maintenance ensures safe learning environments with compliant electrical, fire, and structural systems."
+      description: "Regular maintenance ensures safe learning environments with compliant electrical, fire, and structural systems.",
+      stat: "Zero",
     },
     {
       icon: Clock,
       title: "Minimal Disruption",
-      description: "Scheduled maintenance during breaks and off-hours ensures uninterrupted academic activities and classes."
+      description: "Maintenance scheduled during breaks and vacations to ensure uninterrupted academic activities.",
+      stat: "0 hrs",
     },
     {
       icon: FileCheck,
       title: "Compliance Ready",
-      description: "Regular inspections and documentation ensure compliance with educational facility safety regulations."
+      description: "Regular inspections and documentation ensure compliance with educational facility safety regulations.",
+      stat: "100%",
     },
     {
       icon: Users,
-      title: "Focused on Education",
-      description: "Reliable facility systems allow staff to focus on teaching while we handle all maintenance requirements."
-    }
+      title: "Focus on Education",
+      description: "Reliable facility systems let teachers and staff focus on education — not maintenance problems.",
+      stat: "Always",
+    },
+  ];
+
+  const faqs: AMCFAQ[] = [
+    {
+      question: "When are maintenance visits typically scheduled?",
+      answer: "We schedule all routine maintenance during school vacations, weekends, or after school hours — so academic activities are never disrupted. Emergency repairs are handled within SLA response times regardless of timing.",
+    },
+    {
+      question: "Are laboratory gas and fume hood systems covered?",
+      answer: "Yes, from the Educational Campus plan onwards. Science lab electrical systems, fume hood maintenance, and gas pipeline inspection are included. Specialized chemistry lab gas systems may require a separate assessment.",
+    },
+    {
+      question: "Can you manage hostel and residential facility maintenance?",
+      answer: "Yes. The University Complex plan includes hostel and residential facility maintenance. This covers electrical, plumbing, HVAC, and common area systems for residential blocks.",
+    },
+    {
+      question: "Do you provide fire safety compliance documentation?",
+      answer: "Yes. All plans include fire safety inspection and documentation. The University Complex plan includes quarterly compliance reports suitable for regulatory submissions to education boards and local fire authorities.",
+    },
+    {
+      question: "How do you handle multiple buildings on a campus?",
+      answer: "A dedicated facility coordinator manages the entire campus. Maintenance is planned building-by-building on a scheduled rotation, with a centralized digital log accessible to your facilities team.",
+    },
+    {
+      question: "Is smart classroom and AV equipment covered?",
+      answer: "Electrical systems supporting smart classrooms (projectors, screens, speakers) are covered. Repair of the AV hardware itself is assessed separately. Basic fixture repairs and power connections are included.",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <button
-              onClick={onBack}
-              className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="text-base">Back</span>
-            </button>
-            <div className="text-2xl text-blue-600">
-              VisvasaHome
-            </div>
-            <a
-              href="tel:+919057567160"
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              <span className="hidden sm:inline text-base">Contact Us</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full mb-6">
-              <GraduationCap className="w-5 h-5 text-blue-600" />
-              <span className="text-blue-600 text-base">Educational Facility Solutions</span>
-            </div>
-            <h1 className="mb-6 text-gray-900">
-              AMC for Educational Institutions
-            </h1>
-            <p className="mb-8 text-gray-600 text-lg leading-relaxed">
-              Structured facility maintenance for schools, colleges, and training centers. Ensure safe learning environments with comprehensive maintenance and safety compliance.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={onBookNow}
-                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-base"
-              >
-                Request Assessment
-              </button>
-              <a
-                href="tel:+919057567160"
-                className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-base"
-              >
-                Speak with Expert
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Plans Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Educational Maintenance Plans</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Transparent pricing with comprehensive service coverage tailored to educational facility requirements.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-xl border ${
-                  plan.popular
-                    ? "border-blue-600 shadow-xl relative"
-                    : "border-gray-200 shadow-sm"
-                } overflow-hidden`}
-              >
-                {plan.popular && (
-                  <div className="bg-blue-600 text-white text-center py-2 text-sm text-base">
-                    Most Popular
-                  </div>
-                )}
-                <div className="p-8">
-                  <h3 className="mb-2 text-gray-900">{plan.name}</h3>
-                  <div className="mb-2">
-                    <span className="text-4xl text-gray-900">{plan.price}</span>
-                    <span className="text-gray-500 ml-2 text-base">{plan.period}</span>
-                  </div>
-                  <p className="text-gray-600 mb-6 text-base leading-relaxed">{plan.description}</p>
-
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-700 text-base leading-relaxed">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <button
-                    onClick={onBookNow}
-                    className={`w-full py-3 rounded-lg transition-colors text-base ${
-                      plan.popular
-                        ? "bg-blue-600 text-white hover:bg-blue-700"
-                        : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                    }`}
-                  >
-                    {plan.price === "Custom" ? "Contact for Pricing" : "Get Started"}
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Included */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Comprehensive Service Coverage</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Complete educational facility maintenance across all learning spaces and support systems.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {servicesIncluded.map((service) => (
-              <div key={service.title} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                <service.icon className="w-10 h-10 text-blue-600 mb-4" />
-                <h3 className="mb-4 text-gray-900">{service.title}</h3>
-                <ul className="space-y-2">
-                  {service.items.map((item, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-blue-600 mt-1.5">•</span>
-                      <span className="text-gray-600 text-base leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="mb-4 text-gray-900">Why Educational AMC?</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Structured maintenance ensures safe learning environments and allows focus on education quality.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit) => (
-              <div key={benefit.title} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                  <benefit.icon className="w-8 h-8 text-blue-600" />
-                </div>
-                <h3 className="mb-2 text-gray-900">{benefit.title}</h3>
-                <p className="text-gray-600 text-base leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="mb-4 text-white">Maintain Safe Learning Environments</h2>
-          <p className="mb-8 text-blue-100 text-lg leading-relaxed">
-            Get a comprehensive facility assessment and customized maintenance plan for your educational institution.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onBookNow}
-              className="px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-base"
-            >
-              Request Assessment
-            </button>
-            <a
-              href="tel:+919057567160"
-              className="px-8 py-3 border border-white text-white rounded-lg hover:bg-blue-700 transition-colors text-base"
-            >
-              Call +91 905 7567 160
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer Note */}
-      <div className="bg-gray-50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-600 text-sm">
-            <p className="mb-2 leading-relaxed">
-              All services performed by verified educational facility maintenance professionals. Contracts include safety compliance documentation.
-            </p>
-            <p className="leading-relaxed">
-              Terms and conditions apply. Pricing customized based on campus size and specific educational requirements.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AMCPageTemplate
+      onBack={onBack}
+      onBookNow={onBookNow}
+      pageIcon={GraduationCap}
+      badge="Educational Facility Solutions"
+      title="AMC for Educational Institutions"
+      subtitle="Structured facility maintenance for schools, colleges, and universities. Ensure safe, well-functioning learning environments with comprehensive maintenance and compliance."
+      heroStats={heroStats}
+      plans={plans}
+      servicesIncluded={servicesIncluded}
+      benefits={benefits}
+      faqs={faqs}
+      ctaTitle="Maintain Safe Learning Environments"
+      ctaSubtitle="Get a comprehensive facility assessment and customized maintenance plan for your educational institution."
+      primaryCta="Request Assessment"
+      footerNote="All services performed by verified educational facility professionals. Safety compliance documentation included. Terms apply."
+    />
   );
 }

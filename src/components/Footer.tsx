@@ -1,3 +1,5 @@
+import logoImg from "figma:asset/eb512c399380dc0d7f2c91ba581d523880a08201.png";
+
 interface FooterProps {
   onNavigate: (page: string) => void;
 }
@@ -8,7 +10,14 @@ export function Footer({ onNavigate }: FooterProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-white mb-4">Visvasahome</h3>
+            <div className="mb-4">
+              <img
+                src={logoImg}
+                alt="VisvasaHome"
+                className="h-10 w-auto"
+                style={{ filter: "brightness(0) invert(1)", maxWidth: "180px" }}
+              />
+            </div>
             <p className="text-sm">
               Complete service ecosystem. Local-first execution.
               Community-first values.

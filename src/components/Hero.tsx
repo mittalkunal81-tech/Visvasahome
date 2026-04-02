@@ -19,8 +19,6 @@ export function Hero({
             </span>
           </div>
 
-          <h1 className="mb-6">Visvasahome</h1>
-
           <p className="text-xl sm:text-2xl mb-4 text-blue-100">
             Professional services.
             <br />

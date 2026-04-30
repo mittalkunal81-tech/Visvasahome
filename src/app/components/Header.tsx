@@ -1,4 +1,4 @@
-import { Menu, X, Phone, Mail, ChevronDown, Home, Building2, Store, Factory, HeartPulse, GraduationCap, UtensilsCrossed, Building, Sparkles, Scissors, Droplets, Zap, Refrigerator, PaintBucket, Heart, Baby, Sofa, PartyPopper, HardHat, Wrench, Hammer, Wind, Drill, Trees, Frame, BrickWall } from "lucide-react";
+import { Menu, X, Phone, Mail, ChevronDown, Home, Building2, Store, Factory, HeartPulse, GraduationCap, UtensilsCrossed, Building, Sparkles, Scissors, Droplets, Zap, Refrigerator, PaintBucket, Heart, Baby, Sofa, PartyPopper, HardHat, Wrench, Hammer, Wind, Drill, Trees, Frame, BrickWall, Info, BookOpen, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { LocationSelector } from "./LocationSelector";
 import logoImg from "figma:asset/eb512c399380dc0d7f2c91ba581d523880a08201.png";
@@ -17,6 +17,7 @@ interface HeaderProps {
   onAMCHospitality?: () => void;
   onAMCSociety?: () => void;
   onHome?: () => void;
+  onNavigate?: (page: string) => void;
 }
 
 export function Header({
@@ -33,6 +34,7 @@ export function Header({
   onAMCHospitality,
   onAMCSociety,
   onHome,
+  onNavigate,
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -296,6 +298,60 @@ export function Header({
               >
                 How It Works
               </a>
+
+              {/* Company Dropdown */}
+              <div className="relative group">
+                <button className="text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-1 text-base">
+                  Company
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+                <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="p-2">
+                    <button
+                      onClick={() => onNavigate?.('about-us')}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-sm"
+                    >
+                      <Info className="w-4 h-4 flex-shrink-0" />
+                      About Us
+                    </button>
+                    <button
+                      onClick={() => onNavigate?.('our-mission')}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-sm"
+                    >
+                      <BookOpen className="w-4 h-4 flex-shrink-0" />
+                      Our Mission
+                    </button>
+                    <button
+                      onClick={() => onNavigate?.('testimonials')}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-sm"
+                    >
+                      <Heart className="w-4 h-4 flex-shrink-0" />
+                      Customer Reviews
+                    </button>
+                    <button
+                      onClick={() => onNavigate?.('blog')}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-sm"
+                    >
+                      <BookOpen className="w-4 h-4 flex-shrink-0" />
+                      Tips & Guides
+                    </button>
+                    <button
+                      onClick={() => onNavigate?.('faq')}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-sm"
+                    >
+                      <MessageSquare className="w-4 h-4 flex-shrink-0" />
+                      FAQs
+                    </button>
+                    <button
+                      onClick={() => onNavigate?.('contact')}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded-lg text-sm"
+                    >
+                      <Mail className="w-4 h-4 flex-shrink-0" />
+                      Contact Us
+                    </button>
+                  </div>
+                </div>
+              </div>
               
               <LocationSelector
                 selectedLocation={selectedLocation}

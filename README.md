@@ -1,8 +1,4 @@
 
-  # Visvasahome
-
-  This is a code bundle for Visvasahome. The original project is available at https://www.figma.com/design/UFh8NjwEOzruD8KD5wja7z/Visvasahome.
-
   ## Running the code
 
   Run `npm i` to install the dependencies.

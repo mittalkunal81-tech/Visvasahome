@@ -1,4 +1,4 @@
-import { Menu, X, Phone, Mail, ChevronDown, Home, Building2, Store, Factory, HeartPulse, GraduationCap, UtensilsCrossed, Building, Sparkles, Scissors, Droplets, Zap, Refrigerator, PaintBucket, Heart, Baby, Sofa, PartyPopper, HardHat, Wrench, Hammer, Wind, Drill, Trees, Frame, BrickWall, Info, BookOpen, MessageSquare } from "lucide-react";
+import { Menu, X, Phone, Mail, ChevronDown, Home, Building2, Store, Factory, HeartPulse, GraduationCap, UtensilsCrossed, Building, Sparkles, Scissors, Droplets, Zap, Refrigerator, PaintBucket, Heart, Baby, Sofa, PartyPopper, HardHat, Wrench, Hammer, Wind, Drill, Trees, Frame, BrickWall, Info, BookOpen, MessageSquare, User, LogIn } from "lucide-react";
 import { useState } from "react";
 import { LocationSelector } from "./LocationSelector";
 import logoImg from "figma:asset/eb512c399380dc0d7f2c91ba581d523880a08201.png";
@@ -18,6 +18,9 @@ interface HeaderProps {
   onAMCSociety?: () => void;
   onHome?: () => void;
   onNavigate?: (page: string) => void;
+  isAuthenticated?: boolean;
+  onLogin?: () => void;
+  onProfile?: () => void;
 }
 
 export function Header({
@@ -35,6 +38,9 @@ export function Header({
   onAMCSociety,
   onHome,
   onNavigate,
+  isAuthenticated = false,
+  onLogin,
+  onProfile,
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -86,22 +92,22 @@ export function Header({
   ];
 
   const contractorOptions = [
-    { name: "Register as Contractor", icon: HardHat, onClick: onRegisterContractor },
+    { name: "Join as Professional", icon: HardHat, onClick: onRegisterContractor },
   ];
 
   return (
     <>
       {/* Top Contact Bar */}
-      <div className="bg-blue-600 text-white">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-10 text-sm">
-            <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between h-12 text-sm">
+            <div className="flex items-center gap-6">
               <a
                 href="mailto:contact@visvasahome.com"
                 className="flex items-center gap-2 hover:text-blue-100 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                <span className="hidden sm:inline text-base">
+                <span className="hidden sm:inline font-medium">
                   contact@visvasahome.com
                 </span>
               </a>
@@ -110,7 +116,7 @@ export function Header({
                 className="flex items-center gap-2 hover:text-blue-100 transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                <span className="hidden sm:inline text-base">
+                <span className="hidden sm:inline font-medium">
                   +91 905 7567 160
                 </span>
               </a>
@@ -120,7 +126,7 @@ export function Header({
                 href="https://wa.me/919057567160"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-1 bg-green-500 hover:bg-green-600 rounded transition-colors text-base"
+                className="flex items-center gap-2 px-4 py-1.5 bg-green-500 hover:bg-green-600 rounded-lg transition-all font-semibold shadow-md hover:shadow-lg"
               >
                 <svg
                   className="w-4 h-4"
@@ -135,11 +141,11 @@ export function Header({
               </a>
               <a
                 href="tel:+919057567160"
-                className="flex items-center gap-2 px-4 py-1 bg-white text-blue-600 hover:bg-blue-50 rounded transition-colors text-base"
+                className="hidden lg:flex items-center gap-2 px-4 py-1.5 bg-white text-blue-600 hover:bg-blue-50 rounded-lg transition-all font-semibold shadow-md hover:shadow-lg"
               >
                 <Phone className="w-4 h-4" />
-                <span className="hidden sm:inline">
-                  Call Directly
+                <span>
+                  Call Now
                 </span>
               </a>
             </div>
@@ -148,7 +154,7 @@ export function Header({
       </div>
 
       {/* Main Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -357,19 +363,29 @@ export function Header({
                 selectedLocation={selectedLocation}
                 onLocationSelect={onLocationSelect}
               />
-              
+
               <button
                 onClick={onRegisterContractor}
-                className="px-5 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-base whitespace-nowrap"
-              >
-                Register as Contractor
-              </button>
-              <button
-                onClick={onBookService}
-                className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-base whitespace-nowrap"
-              >
-                Book Service
-              </button>
+                className="px-5 py-2.5 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all text-base whitespace-nowrap font-semibold"
+              >Join as Professional</button>
+
+              {isAuthenticated ? (
+                <button
+                  onClick={onProfile}
+                  className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all text-base whitespace-nowrap flex items-center gap-2 font-semibold shadow-md hover:shadow-lg"
+                >
+                  <User className="w-4 h-4" />
+                  Profile
+                </button>
+              ) : (
+                <button
+                  onClick={onLogin}
+                  className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all text-base whitespace-nowrap flex items-center gap-2 font-semibold shadow-md hover:shadow-lg"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Login
+                </button>
+              )}
             </nav>
 
             {/* Mobile Menu Button */}
@@ -543,25 +559,40 @@ export function Header({
                     onLocationSelect={onLocationSelect}
                   />
                 </div>
-                
+
                 <button
                   onClick={() => {
                     onRegisterContractor();
                     setMobileMenuOpen(false);
                   }}
-                  className="px-6 py-2.5 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-base mt-3"
+                  className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all text-base mt-3 font-semibold"
                 >
-                  Register as Contractor
+                  Join as Professional
                 </button>
-                <button
-                  onClick={() => {
-                    onBookService();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-base"
-                >
-                  Book Service
-                </button>
+
+                {isAuthenticated ? (
+                  <button
+                    onClick={() => {
+                      onProfile?.();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all text-base flex items-center justify-center gap-2 font-semibold shadow-md"
+                  >
+                    <User className="w-5 h-5" />
+                    My Profile
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      onLogin?.();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all text-base flex items-center justify-center gap-2 font-semibold shadow-md"
+                  >
+                    <LogIn className="w-5 h-5" />
+                    Login / Sign Up
+                  </button>
+                )}
               </nav>
             </div>
           )}

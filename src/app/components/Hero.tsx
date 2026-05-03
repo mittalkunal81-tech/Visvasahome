@@ -37,32 +37,32 @@ export function Hero({ onGetStarted, onRegisterContractor }: HeroProps) {
               <span className="text-sm text-white">Now serving 20+ cities across India</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl font-semibold text-white mb-4 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
               Trusted Local Services.<br />
               <span className="text-blue-200">Verified Professionals.</span>
             </h1>
 
-            <p className="text-lg text-blue-100 mb-3 leading-relaxed">
-              VisvasaHome is India's trusted local service ecosystem — connecting you with background-verified contractors and skilled professionals for home repair, maintenance, beauty, wellness, and more.
+            <p className="text-lg sm:text-xl text-blue-100 mb-4 leading-relaxed max-w-2xl">
+              India's premier local service ecosystem — connecting you with background-verified contractors and skilled professionals for home repair, maintenance, beauty, wellness, and more.
             </p>
 
-            <p className="text-sm text-blue-200 mb-8 italic">
+            <p className="text-sm text-blue-200 mb-10 font-medium">
               Founded by Kunal Mittal · Jaipur, India · Reliable • Transparent • Local-First
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <button
                 onClick={onGetStarted}
-                className="px-8 py-4 bg-white text-blue-700 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 font-medium"
+                className="px-8 py-4 bg-white text-blue-700 rounded-xl hover:bg-blue-50 transition-all hover:shadow-xl flex items-center justify-center gap-2 font-semibold shadow-lg"
               >
                 Find Services Near You
                 <ArrowRight className="w-5 h-5" />
               </button>
               <button
                 onClick={onRegisterContractor}
-                className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg hover:bg-white/10 transition-colors font-medium"
+                className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl hover:bg-white hover:text-blue-700 transition-all font-semibold"
               >
-                Join as Contractor
+                Join as Professional
               </button>
             </div>
 

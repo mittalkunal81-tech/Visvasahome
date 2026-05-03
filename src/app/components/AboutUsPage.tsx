@@ -1,6 +1,7 @@
 import { ArrowLeft, Target, Users, Shield, TrendingUp, Award, Heart, CheckCircle, Linkedin, Quote, MapPin, Calendar } from 'lucide-react';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import founderPhoto from '../../imports/PHOTO.jpeg';
 
 interface AboutUsPageProps {
   onBack: () => void;
@@ -165,8 +166,12 @@ export function AboutUsPage({ onBack, onNavigate }: AboutUsPageProps) {
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
                 {/* Photo / Initials Block */}
                 <div className="lg:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 p-12 flex flex-col items-center justify-center text-white">
-                  <div className="w-28 h-28 bg-white/20 rounded-full flex items-center justify-center mb-6 border-4 border-white/30">
-                    <span className="text-4xl font-bold text-white">KM</span>
+                  <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-white/30 shadow-xl">
+                    <img
+                      src={founderPhoto}
+                      alt="Kunal Mittal - Founder & CEO, VisvasaHome"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <h3 className="text-2xl font-semibold text-white mb-1">Kunal Mittal</h3>
                   <p className="text-blue-200 text-sm mb-4">Founder &amp; CEO, VisvasaHome</p>

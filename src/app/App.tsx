@@ -29,13 +29,21 @@ import { FAQPage } from './components/FAQPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsPage } from './components/TermsPage';
 import { SEO } from './components/SEO';
+import { ProfessionalRegisterPage } from './components/ProfessionalRegisterPage';
+import { AuthPage } from './components/AuthPage';
+import { MobileBottomNav } from './components/MobileBottomNav';
+import { UserProfilePage } from './components/UserProfilePage';
+import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
+import { MobileContactBar } from './components/MobileContactBar';
 import { useState, useEffect } from 'react';
+import { organizationSchema, localBusinessSchema, serviceSchema, websiteSchema } from './utils/structuredData';
 
 type PageType =
   | 'home'
   | 'register-contractor'
   | 'get-started-customer'
   | 'join-professional'
+  | 'professional-register'
   | 'benefits'
   | 'training-support'
   | 'success-stories'
@@ -55,7 +63,12 @@ type PageType =
   | 'how-it-works'
   | 'faq'
   | 'privacy-policy'
-  | 'terms';
+  | 'terms'
+  | 'login'
+  | 'profile'
+  | 'search'
+  | 'bookings'
+  | 'menu';
 
 const seoMeta: Record<PageType, { title: string; description: string }> = {
   'home': {
@@ -73,6 +86,10 @@ const seoMeta: Record<PageType, { title: string; description: string }> = {
   'join-professional': {
     title: 'Join as Professional | VisvasaHome Contractor Program',
     description: 'Become a verified professional on VisvasaHome. Access consistent work, training, support, and career-building opportunities across 20+ cities.',
+  },
+  'professional-register': {
+    title: 'Register as Professional | Earn ₹30,000–₹90,000/Month | VisvasaHome Partner Program',
+    description: 'Join VisvasaHome as a verified professional partner. Register FREE as electrician, plumber, AC technician, carpenter, cleaner, beauty expert, or home repair specialist. Earn ₹30,000–₹90,000/month with AMC income, fair pricing, free training, and verified badge. India\'s most trusted local services professional network.',
   },
   'benefits': {
     title: 'Contractor Benefits | VisvasaHome Professional Network',
@@ -154,22 +171,70 @@ const seoMeta: Record<PageType, { title: string; description: string }> = {
     title: 'Terms of Service | VisvasaHome',
     description: 'Terms and conditions governing the use of VisvasaHome\'s platform, services, and professional network.',
   },
+  'login': {
+    title: 'Login | VisvasaHome',
+    description: 'Login to your VisvasaHome account to manage bookings and access services.',
+  },
+  'profile': {
+    title: 'My Profile | VisvasaHome',
+    description: 'Manage your VisvasaHome account, bookings, and preferences.',
+  },
+  'search': {
+    title: 'Browse Services | VisvasaHome',
+    description: 'Browse all available services on VisvasaHome.',
+  },
+  'bookings': {
+    title: 'My Bookings | VisvasaHome',
+    description: 'View and manage your service bookings.',
+  },
+  'menu': {
+    title: 'Menu | VisvasaHome',
+    description: 'Explore VisvasaHome services and features.',
+  },
 };
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userPhone, setUserPhone] = useState('');
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  // Check if user is already logged in (from localStorage)
+  useEffect(() => {
+    const savedPhone = localStorage.getItem('visvasahome_user_phone');
+    if (savedPhone) {
+      setIsAuthenticated(true);
+      setUserPhone(savedPhone);
+    }
+  }, []);
 
   // Scroll to top on page change
   useEffect(() => {
     window.scrollTo(0, 0);
+    setShowMobileMenu(false);
   }, [currentPage]);
 
   const navigate = (page: PageType) => setCurrentPage(page);
-  const meta = seoMeta[currentPage];
+
+  const handleLoginSuccess = (phoneNumber: string) => {
+    setIsAuthenticated(true);
+    setUserPhone(phoneNumber);
+    localStorage.setItem('visvasahome_user_phone', phoneNumber);
+    navigate('home');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUserPhone('');
+    localStorage.removeItem('visvasahome_user_phone');
+    navigate('home');
+  };
+
+  const meta = seoMeta[currentPage] || seoMeta['home'];
 
   const commonHeaderProps = {
-    onRegisterContractor: () => navigate('register-contractor'),
+    onRegisterContractor: () => navigate('professional-register'),
     onBookService: () => navigate('get-started-customer'),
     selectedLocation,
     onLocationSelect: setSelectedLocation,
@@ -183,6 +248,109 @@ export default function App() {
     onAMCSociety: () => navigate('amc-society'),
     onHome: () => navigate('home'),
   };
+
+  // Login page
+  if (currentPage === 'login') {
+    return <AuthPage onLoginSuccess={handleLoginSuccess} onBack={() => navigate('home')} />;
+  }
+
+  // Menu page (redirect to home for now)
+  if (currentPage === 'menu') {
+    navigate('home');
+    return null;
+  }
+
+  // Profile page
+  if (currentPage === 'profile') {
+    if (!isAuthenticated) {
+      navigate('login');
+      return null;
+    }
+    return (
+      <>
+        <SEO title="My Profile | VisvasaHome" description="Manage your VisvasaHome account, bookings, and preferences." />
+        <UserProfilePage
+          phoneNumber={userPhone}
+          onLogout={handleLogout}
+          onNavigate={(page) => navigate(page as PageType)}
+        />
+        <MobileBottomNav
+          currentPage={currentPage}
+          onNavigate={(page) => navigate(page as PageType)}
+          onMenuOpen={() => setShowMobileMenu(true)}
+        />
+      </>
+    );
+  }
+
+  // Search/Services page
+  if (currentPage === 'search') {
+    return (
+      <>
+        <SEO title="Browse Services | VisvasaHome" description="Browse all available services on VisvasaHome." />
+        <div className="min-h-screen bg-gray-50 pb-20 lg:pb-0">
+          <Header
+            {...commonHeaderProps}
+            onNavigate={(page) => navigate(page as PageType)}
+            isAuthenticated={isAuthenticated}
+            onLogin={() => navigate('login')}
+            onProfile={() => navigate('profile')}
+          />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-6">Browse Services</h1>
+            <ServicesOffered onServiceClick={() => navigate('get-started-customer')} />
+          </div>
+        </div>
+        <MobileBottomNav
+          currentPage={currentPage}
+          onNavigate={(page) => navigate(page as PageType)}
+          onMenuOpen={() => setShowMobileMenu(true)}
+        />
+      </>
+    );
+  }
+
+  // Bookings page (placeholder)
+  if (currentPage === 'bookings') {
+    if (!isAuthenticated) {
+      navigate('login');
+      return null;
+    }
+    return (
+      <>
+        <SEO title="My Bookings | VisvasaHome" description="View and manage your service bookings." />
+        <div className="min-h-screen bg-gray-50 pb-20 lg:pb-0">
+          <div className="bg-gradient-to-br from-blue-600 to-blue-700 px-6 pt-12 pb-8 lg:pt-8">
+            <div className="max-w-md mx-auto">
+              <h1 className="text-white text-2xl font-bold">My Bookings</h1>
+            </div>
+          </div>
+          <div className="max-w-md mx-auto px-6 py-8">
+            <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
+              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">No bookings yet</h2>
+              <p className="text-gray-600 mb-6">Book your first service to get started</p>
+              <button
+                onClick={() => navigate('get-started-customer')}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              >
+                Browse Services
+              </button>
+            </div>
+          </div>
+        </div>
+        <MobileBottomNav
+          currentPage={currentPage}
+          onNavigate={(page) => navigate(page as PageType)}
+          onMenuOpen={() => setShowMobileMenu(true)}
+        />
+      </>
+    );
+  }
 
   if (currentPage === 'register-contractor') {
     return (
@@ -207,6 +375,15 @@ export default function App() {
       <>
         <SEO title={meta.title} description={meta.description} />
         <JoinProfessional onBack={() => navigate('home')} onRegister={() => navigate('register-contractor')} />
+      </>
+    );
+  }
+
+  if (currentPage === 'professional-register') {
+    return (
+      <>
+        <SEO title={meta.title} description={meta.description} />
+        <ProfessionalRegisterPage onBack={() => navigate('home')} onRegister={() => navigate('register-contractor')} />
       </>
     );
   }
@@ -392,21 +569,41 @@ export default function App() {
   }
 
   // Home Page
+  const homeStructuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [organizationSchema, localBusinessSchema, serviceSchema, websiteSchema],
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      <SEO title={meta.title} description={meta.description} />
+    <div className="min-h-screen bg-white pb-20 lg:pb-0">
+      <SEO
+        title={meta.title}
+        description={meta.description}
+        structuredData={homeStructuredData}
+      />
       <Header
         {...commonHeaderProps}
         onNavigate={(page) => navigate(page as PageType)}
+        isAuthenticated={isAuthenticated}
+        onLogin={() => navigate('login')}
+        onProfile={() => navigate('profile')}
       />
-      <Hero onGetStarted={() => navigate('get-started-customer')} onRegisterContractor={() => navigate('register-contractor')} />
+      <Hero onGetStarted={() => navigate('get-started-customer')} onRegisterContractor={() => navigate('professional-register')} />
+      <MobileContactBar />
       <ServicesOffered onServiceClick={() => navigate('get-started-customer')} />
       <Differentiation />
-      <ForContractors onRegisterContractor={() => navigate('register-contractor')} />
-      <CTASection onGetStarted={() => navigate('get-started-customer')} onRegisterContractor={() => navigate('register-contractor')} />
+      <ForContractors onRegisterContractor={() => navigate('professional-register')} onProfessionalRegister={() => navigate('professional-register')} />
+      <CTASection onGetStarted={() => navigate('get-started-customer')} onRegisterContractor={() => navigate('professional-register')} />
       <Footer
         onNavigate={(page) => navigate(page as PageType)}
+        onRegisterContractor={() => navigate('professional-register')}
       />
+      <MobileBottomNav
+        currentPage={currentPage}
+        onNavigate={(page) => navigate(page as PageType)}
+        onMenuOpen={() => setShowMobileMenu(true)}
+      />
+      <WhatsAppFloatingButton />
     </div>
   );
 }

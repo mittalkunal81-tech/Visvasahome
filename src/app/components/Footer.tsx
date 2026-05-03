@@ -3,9 +3,10 @@ import { Instagram, Facebook, Youtube, Linkedin, Phone, Mail, MapPin } from 'luc
 
 interface FooterProps {
   onNavigate: (page: string) => void;
+  onRegisterContractor: () => void;
 }
 
-export function Footer({ onNavigate }: FooterProps) {
+export function Footer({ onNavigate, onRegisterContractor }: FooterProps) {
   return (
     <footer className="bg-gray-900 text-gray-300">
       {/* Main Footer */}
@@ -123,13 +124,8 @@ export function Footer({ onNavigate }: FooterProps) {
             <h4 className="text-white font-semibold mb-5 text-sm uppercase tracking-wide">For Professionals</h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <button onClick={() => onNavigate('join-professional')} className="text-gray-400 hover:text-white transition-colors text-left">
+                <button onClick={onRegisterContractor} className="text-gray-400 hover:text-white transition-colors text-left">
                   Join as Professional
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('register-contractor')} className="text-gray-400 hover:text-white transition-colors text-left">
-                  Register as Contractor
                 </button>
               </li>
               <li>

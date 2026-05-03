@@ -7,21 +7,23 @@ interface SEOProps {
   canonical?: string;
   ogType?: 'website' | 'article';
   ogImage?: string;
+  structuredData?: object;
 }
 
-export function SEO({ 
-  title, 
+export function SEO({
+  title,
   description = siteConfig.description,
   canonical,
   ogType = 'website',
-  ogImage
+  ogImage,
+  structuredData
 }: SEOProps) {
-  
+
   useEffect(() => {
-    // Set document title
-    const pageTitle = title 
-      ? `${title} | ${siteConfig.name}` 
-      : `${siteConfig.name} - Professional Local Services`;
+    // Set document title with proper length (50-60 chars optimal)
+    const pageTitle = title
+      ? title
+      : `${siteConfig.name} - Verified Local Service Professionals India`;
     document.title = pageTitle;
     
     // Update or create meta tags
@@ -65,16 +67,44 @@ export function SEO({
     
     // Canonical URL
     let linkElement = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-    
+
     if (!linkElement) {
       linkElement = document.createElement('link');
       linkElement.setAttribute('rel', 'canonical');
       document.head.appendChild(linkElement);
     }
-    
+
     linkElement.setAttribute('href', canonical || siteConfig.url);
-    
-  }, [title, description, canonical, ogType, ogImage]);
-  
+
+    // Additional SEO meta tags
+    updateMetaTag('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1', true);
+    updateMetaTag('author', siteConfig.founder.name, true);
+    updateMetaTag('language', 'English', true);
+    updateMetaTag('geo.region', 'IN', true);
+    updateMetaTag('geo.placename', 'India', true);
+    updateMetaTag('theme-color', '#2563eb', true);
+
+    // Mobile optimization
+    updateMetaTag('viewport', 'width=device-width, initial-scale=1, maximum-scale=5', true);
+    updateMetaTag('format-detection', 'telephone=yes', true);
+    updateMetaTag('mobile-web-app-capable', 'yes', true);
+    updateMetaTag('apple-mobile-web-app-capable', 'yes', true);
+    updateMetaTag('apple-mobile-web-app-status-bar-style', 'black-translucent', true);
+
+    // Add JSON-LD structured data
+    if (structuredData) {
+      let scriptElement = document.querySelector('script[type="application/ld+json"]');
+
+      if (!scriptElement) {
+        scriptElement = document.createElement('script');
+        scriptElement.setAttribute('type', 'application/ld+json');
+        document.head.appendChild(scriptElement);
+      }
+
+      scriptElement.textContent = JSON.stringify(structuredData);
+    }
+
+  }, [title, description, canonical, ogType, ogImage, structuredData]);
+
   return null;
 }
